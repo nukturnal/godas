@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  region: MyString
+  city: MyString
+  district: MyString
+  locality: MyString
+  address: MyString
+  longitude: 9.99
+  latitude: 9.99
+  level_1_code: MyString
+  level_2_code: MyString
+  level_3_code: MyString
+  digital_address: MyString
+  location_code: MyString
+  nickname: MyString
+
+two:
+  region: MyString
+  city: MyString
+  district: MyString
+  locality: MyString
+  address: MyString
+  longitude: 9.99
+  latitude: 9.99
+  level_1_code: MyString
+  level_2_code: MyString
+  level_3_code: MyString
+  digital_address: MyString
+  location_code: MyString
+  nickname: MyString

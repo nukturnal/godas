@@ -1,7 +1,7 @@
 module Locations
   module DigitalAddress
     extend ActiveSupport::Concern
-    include CommonUtils
+    include ::CommonUtils
 
     included do
       after_validation :generate_digital_address

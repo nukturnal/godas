@@ -5,11 +5,7 @@ module Locations
     included do
       reverse_geocoded_by :latitude, :longitude do |obj, results|
         if geo = results.first
-          obj.city = geo.city
           obj.address = geo.address
-          obj.locality = geo.neighborhood
-          obj.district = geo.sub_state
-          obj.region = geo.state
         end
       end
 
@@ -17,11 +13,7 @@ module Locations
         if geo = results.first
           obj.longitude = geo.longitude
           obj.latitude = geo.latitude
-          obj.city = geo.city
           obj.address = geo.address
-          obj.locality = geo.neighborhood
-          obj.district = geo.sub_state
-          obj.region = geo.state
         end
       end
 

@@ -10,24 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030233035) do
+ActiveRecord::Schema.define(version: 20171101073655) do
+
+  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "code"
+    t.bigint "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["region_id"], name: "index_cities_on_region_id"
+  end
+
+  create_table "districts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "code"
+    t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_districts_on_city_id"
+  end
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "region"
-    t.string "city"
-    t.string "district"
-    t.string "locality"
+    t.bigint "district_id"
+    t.string "code"
     t.string "address"
     t.decimal "longitude", precision: 10, scale: 6
     t.decimal "latitude", precision: 10, scale: 6
-    t.string "level_1_code"
-    t.string "level_2_code"
-    t.string "level_3_code"
-    t.string "digital_address"
-    t.string "location_code"
-    t.string "nickname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_locations_on_district_id"
+  end
+
+  create_table "regions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "cities", "regions"
+  add_foreign_key "districts", "cities"
+  add_foreign_key "locations", "districts"
 end

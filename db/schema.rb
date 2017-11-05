@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(version: 20171101073655) do
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "district_id"
     t.string "code"
+    t.string "toplevel_code"
     t.string "address"
-    t.decimal "longitude", precision: 10, scale: 6
-    t.decimal "latitude", precision: 10, scale: 6
+    t.float "longitude", limit: 24
+    t.float "latitude", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["district_id"], name: "index_locations_on_district_id"

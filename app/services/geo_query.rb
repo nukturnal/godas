@@ -3,8 +3,8 @@ class GeoQuery
   attr_accessor :region, :city, :district, :locality,
                 :longitude, :latitude, :formatted_address, :locality
 
-  def initialize(query = nil)
-    @query = query
+  def initialize(latitude, longitude)
+    @query = [latitude, longitude]
   end
 
   def valid?

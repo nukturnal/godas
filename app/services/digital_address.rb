@@ -1,26 +1,34 @@
 class DigitalAddress
-  RADIUS = 0.024384 / 2 # 80ft in killometres
-  MIN_RADIUS = RADIUS / 2 # 80ft in killometres
-  attr_accessor :geo_query, :query, :location, :address
+  RADIUS = 0.2 # lowest acceptable kilometer Geocoder Library limitation
+  FEET_PER_KM = 3280.84
+  ADDRESS_BLOCK = 80 # Square Feet
+  attr_accessor :geo_query, :longitude, :latitude, :locations, :address, :distances, :query
 
   # Process geocode information
+  # @param latitude [Float]
+  # @param longitude [Float]
   # @return [Boolean]
-  def processed?(query)
-    @query = query
-    @geo_query = GeoQuery.new(@query)
+  def processed?(latitude, longitude)
+    @latitude = latitude
+    @longitude = longitude
+    @query = [latitude, longitude]
+    @geo_query = GeoQuery.new(*@query)
     if @geo_query.valid?
-      point = @geo_query.result.coordinates
-      box = Geocoder::Calculations.bounding_box(point, RADIUS,
-                                                units: :km, min_radius: MIN_RADIUS)
-      @location = Location.within_bounding_box(box)
-      if @location.present?
-        @address = @location.first.code
-        return true
-      else
-        return generate_address
+      @distances = []
+      @locations = Location.near(@query, RADIUS, units: :km)
+      return generate_address if @locations.blank?
+      @locations.each do |location|
+        @distances << location.distance * FEET_PER_KM
+        if @distances.last <= ADDRESS_BLOCK
+          @address = location.digital_address
+          break true
+        else
+          break generate_address
+        end
       end
+    else
+      false
     end
-    false
   end
 
   private
@@ -30,10 +38,10 @@ class DigitalAddress
     region = Region.find_or_create_by(name: @geo_query.region)
     city = region.cities.find_or_create_by(name: @geo_query.city)
     district = city.districts.find_or_create_by(name: @geo_query.district)
-    @location = district.locations.find_or_create_by(latitude: @geo_query.latitude,
-                                                     longitude: @geo_query.longitude)
-    if @location.present?
-      @address = location.code
+    location = district.locations.find_or_create_by(latitude: @latitude,
+                                                     longitude: @longitude)
+    if location.present?
+      @address = location.digital_address
       true
     else
       false

@@ -9,25 +9,12 @@ module Locations
         end
       end
 
-      geocoded_by :location_name do |obj, results|
-        if geo = results.first
-          obj.longitude = geo.longitude
-          obj.latitude = geo.latitude
-          obj.address = geo.address
-        end
-      end
-
       before_validation :check_coordinates
-      after_validation :reverse_geocode, if: Proc.new { |a| coordinates_available? && !location_available? }
-      after_validation :geocode, if: Proc.new { |a| !coordinates_available? && location_available? }
+      after_validation :reverse_geocode, if: Proc.new { |a| coordinates_available? }
     end
 
     def coordinates_available?
       longitude.present? and latitude.present?
-    end
-
-    def location_available?
-      location_name.present?
     end
 
     def check_coordinates

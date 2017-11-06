@@ -48,6 +48,13 @@ body {
       color: #fff;
     }
   }
+
+  li.search {
+    min-width: 320px;
+    form {
+      margin-bottom: 0;
+    }
+  }
 }
 .godas-navbar:after {
   clear: both;
@@ -56,4 +63,9 @@ body {
 .godas-map {
   height: 100%;
   background: #e0e1e1;
+
+  // Fix Kube overwriting Google Maps
+  button {
+    min-height: 0 !important;
+  }
 }

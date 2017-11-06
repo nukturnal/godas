@@ -2,7 +2,8 @@ class DigitalAddress
   RADIUS = 0.2 # lowest acceptable kilometer Geocoder Library limitation
   FEET_PER_KM = 3280.84
   ADDRESS_BLOCK = 80 # Square Feet
-  attr_accessor :geo_query, :longitude, :latitude, :locations,
+  NOT_LISTED = 'Not Listed'
+  attr_accessor :geo_query, :longitude, :latitude, :locations, :formatted_address,
                 :address, :distances, :query, :district, :region, :city
 
   # Process geocode information
@@ -15,6 +16,7 @@ class DigitalAddress
     @query = [latitude, longitude]
     @geo_query = GeoQuery.new(*@query)
     if @geo_query.valid?
+      p @geo_query.result.to_json
       @distances = []
       @locations = Location.near(@query, RADIUS, units: :km)
       return generate_address if @locations.blank?
@@ -36,9 +38,11 @@ class DigitalAddress
 
   # Write to DB and generate a new address code
   def generate_address
+    city_name = @geo_query.city.present? ? @geo_query.city : NOT_LISTED
+    district_name = @geo_query.district.present? ? @geo_query.district : NOT_LISTED
     region = Region.find_or_create_by(name: @geo_query.region)
-    city = region.cities.find_or_create_by(name: @geo_query.city)
-    district = city.districts.find_or_create_by(name: @geo_query.district)
+    city = region.cities.find_or_create_by(name: city_name)
+    district = city.districts.find_or_create_by(name: district_name)
     location = district.locations.find_or_create_by(latitude: @latitude,
                                                      longitude: @longitude)
     if location.present?
@@ -53,7 +57,8 @@ class DigitalAddress
   # Will fix in performance updates
   def set_address(location = Location.new)
     @address = location.digital_address
-    @city = @geo_query.city
+    @formatted_address = location.address
+    @city = @geo_query.city.present? ? @geo_query.city : NOT_LISTED
     @region = @geo_query.region
     @district = @geo_query.district
   end

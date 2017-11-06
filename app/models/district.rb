@@ -9,5 +9,5 @@ class District < ApplicationRecord
   end
 
   validates :name, presence: true, uniqueness:  { scope: :city_id }
-  validates :code, presence: true, uniqueness:  { scope: :city_id }
+  validates :code, presence: true, uniqueness:  { scope: [:name, :city_id] }
 end

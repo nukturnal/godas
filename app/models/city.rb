@@ -9,5 +9,5 @@ class City < ApplicationRecord
   end
 
   validates :name, presence: true, uniqueness: { scope: :region_id }
-  validates :code, presence: true, uniqueness: { scope: :region_id }
+  validates :code, presence: true, uniqueness: { scope: [:name, :region_id] }
 end

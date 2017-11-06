@@ -31,6 +31,7 @@ class GeoQuery
 
     case Geocoder.config.lookup
       when :location_iq
+        @city = location_iq_city if @city.blank?
         @locality = @result.village
         @formatted_address = @result.address
         @district = @result.county
@@ -50,5 +51,14 @@ class GeoQuery
     rc = @result.address_components_of_type(component)
     return nil if rc.blank?
     rc.try(:first)['long_name']
+  end
+
+  # Copied from Geocoder Source
+  # Added extra keys
+  def location_iq_city
+    %w(city town village hamlet suburb city_district neighbourhood).each do |key|
+      return @result.data['address'][key] if @result.data['address'].key?(key)
+    end
+    return nil
   end
 end

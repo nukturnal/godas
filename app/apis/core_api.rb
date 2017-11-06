@@ -23,8 +23,9 @@ class CoreAPI < Grape::API
           status: "OK",
           data: {
               digital_address: da.address,
-              latitude: da.latitude,
-              longitude: da.longitude,
+              formatted_address: da.formatted_address,
+              latitude: da.latitude.to_f.round(6),
+              longitude: da.longitude.to_f.round(6),
               region: da.region,
               city: da.city,
               district: da.district

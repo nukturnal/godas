@@ -51,6 +51,51 @@ function bind_address_search(){
     });
 }
 
+function get_address(lng,lat) {
+    var jqxhr = $.post( "apis/core/getaddress", { longitude: lng, latitude: lat })
+        .done(function(data) {
+            $(".modal-body").html(address_modal(data.data));
+            $.modalwindow({
+                target: '#my-modal',
+                header: 'Location Details',
+                overlay: false
+            });
+        })
+        .fail(function() {
+            alert( "error" );
+        })
+        .always(function() {
+            // alert( "finished" );
+        });
+}
+
+function address_modal(data) {
+    return '      <table>\n' +
+    '        <tbody>\n' +
+    '        <tr>\n' +
+    '          <td><strong>Digital Address</strong></td>\n' +
+    '          <td>'+data.digital_address+'</td>\n' +
+    '        </tr>\n' +
+    '        <tr>\n' +
+    '          <td><strong>Longitude, Latitude</strong></td>\n' +
+    '          <td>'+data.longitude +' , ' +data.latitude+'</td>\n' +
+    '        </tr>\n' +
+    '        <tr>\n' +
+    '          <td><strong>City, Suburb, Town </strong></td>\n' +
+    '          <td>'+data.city+'</td>\n' +
+    '        </tr>\n' +
+    '        <tr>\n' +
+    '          <td><strong>District</strong></td>\n' +
+    '          <td>'+data.district+'</td>\n' +
+    '        </tr>\n' +
+    '        <tr>\n' +
+    '          <td><strong>Region</strong></td>\n' +
+    '          <td>'+data.region+'</td>\n' +
+    '        </tr>\n' +
+    '        </tbody>\n' +
+    '      </table>'
+}
+
 $(document).on('turbolinks:load', function(){
     map = new GMaps({
         el: '.godas-map',
@@ -63,6 +108,7 @@ $(document).on('turbolinks:load', function(){
         var index = map.markers.length;
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
+        get_address(lng, lat);
         map.addMarker({
             lat: lat,
             lng: lng,

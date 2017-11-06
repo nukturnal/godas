@@ -1,0 +1,59 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+.godas-navbar {
+  padding: 15px 40px;
+  border: none;
+  background: #131313;
+  ul { padding: 0; margin: 0; display: block;}
+  li.brand {
+    letter-spacing: 5px;
+    color: #fff;
+    font-weight: 900;
+    font-size: 25px;
+    margin-top: 6px;
+    margin-right: 20px;
+  }
+  li {
+    list-style: none;
+    float: left;
+    margin-right: 15px;
+
+    a {
+      font-weight: bold;
+      padding: 8px 15px;
+      margin: 0;
+      border: none;
+      border-radius: 3px !important;
+      text-shadow: none;
+      font-size: 15px;
+      color: #666;
+      text-decoration: none;
+      display: block;
+    }
+
+    a:hover {
+      color: #f8f8f8;
+    }
+  }
+
+  li.active {
+    a {
+      background: #1c86f2;
+      color: #fff;
+    }
+
+    a.hover {
+      background: #4ca0f5;
+      color: #fff;
+    }
+  }
+}
+.godas-navbar:after {
+  clear: both;
+}
+
+.godas-map {
+  height: 100%;
+  background: #e0e1e1;
+}

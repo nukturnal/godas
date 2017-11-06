@@ -2,7 +2,8 @@ class DigitalAddress
   RADIUS = 0.2 # lowest acceptable kilometer Geocoder Library limitation
   FEET_PER_KM = 3280.84
   ADDRESS_BLOCK = 80 # Square Feet
-  attr_accessor :geo_query, :longitude, :latitude, :locations, :address, :distances, :query
+  attr_accessor :geo_query, :longitude, :latitude, :locations,
+                :address, :distances, :query, :district, :region, :city
 
   # Process geocode information
   # @param latitude [Float]
@@ -20,7 +21,7 @@ class DigitalAddress
       @locations.each do |location|
         @distances << location.distance * FEET_PER_KM
         if @distances.last <= ADDRESS_BLOCK
-          @address = location.digital_address
+          set_address location
           break true
         else
           break generate_address
@@ -41,10 +42,19 @@ class DigitalAddress
     location = district.locations.find_or_create_by(latitude: @latitude,
                                                      longitude: @longitude)
     if location.present?
-      @address = location.digital_address
+      set_address location
       true
     else
       false
     end
+  end
+
+  # I know this suffers from N1 Issues
+  # Will fix in performance updates
+  def set_address(location = Location.new)
+    @address = location.digital_address
+    @city = @geo_query.city
+    @region = @geo_query.region
+    @district = @geo_query.district
   end
 end

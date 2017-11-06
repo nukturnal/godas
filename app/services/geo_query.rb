@@ -21,15 +21,28 @@ class GeoQuery
 
   private
 
+  # Currently supports Google & LocationIQ Results
   def process_results
     return false if @result.blank?
     @region = @result.state
     @city = @result.city
-    @district = @result.sub_state
     @longitude = @result.longitude
     @latitude = @result.latitude
-    @locality = result_component(:sublocality)
-    @formatted_address = @result.formatted_address
+
+    case Geocoder.config.lookup
+      when :location_iq
+        @locality = @result.village
+        @formatted_address = @result.address
+        @district = @result.county
+      when :google, :google_premier, :google_places_details, :google_places_search
+        @locality = result_component(:sublocality)
+        @formatted_address = @result.formatted_address
+        @district = @result.sub_state
+      else
+        @district = nil
+        @locality = nil
+        @formatted_address = nil
+    end
   end
 
   # pull other needed data attributes from results

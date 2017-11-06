@@ -43,7 +43,7 @@ module CommonUtils
       convert_name(name_array.join(" "), 2)
     else
       name = name_array[0]
-      "#{name[0]}#{name[-2..-1]}".upcase
+      "#{name[0..1]}#{name[-2..-1]}".upcase
     end
   end
 end

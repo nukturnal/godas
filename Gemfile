@@ -57,4 +57,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Project Gemfiles
 gem 'geocoder'
 gem 'jquery-rails'
-gem 'gmaps4rails'
+gem 'grape'
+gem 'grape_logging'

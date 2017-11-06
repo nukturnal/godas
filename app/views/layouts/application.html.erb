@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Godas</title>
+    <title>Ghana Open Digital Address System (GODAS)</title>
     <%= csrf_meta_tags %>
     <link href="//fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,7 +10,19 @@
   </head>
 
   <body>
-    <div class="nav-container"></div>
+    <div class="godas-navbar">
+      <div class="row auto">
+        <div class="col">
+          <ul>
+            <li class="brand">GODAS</li>
+            <li class="active"><%=link_to 'Get Address', home_path %></li>
+            <li class="search"><input type="text" class="search" placeholder="Find a location" id="address"></li>
+            <li><a href="">What's GODAS</a></li>
+            <li><a href="">Github</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="root-container"><%= yield %></div>
   </body>
 </html>

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  get 'home/index'
+  get 'getaddress' => 'home#index', as: :home
 
-  root 'home#index'
+  root to: "home#index"
+
+  namespace :apis do
+    mount CoreAPI => 'core'
+  end
 end

@@ -39,6 +39,7 @@ body {
 
   li.active {
     a {
+      text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.60);
       background: #1c86f2;
       color: #fff;
     }
@@ -62,7 +63,7 @@ body {
 
 .godas-map {
   height: 100%;
-  background: #e0e1e1;
+  background: #4ca0f5;
 
   // Fix Kube overwriting Google Maps
   button {

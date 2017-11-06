@@ -8,6 +8,6 @@ class District < ApplicationRecord
     self.code = region_code(name) if name.present?
   end
 
-  validates :name, presence: true, uniqueness: true
-  validates :code, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness:  { scope: :city_id }
+  validates :code, presence: true, uniqueness:  { scope: :city_id }
 end

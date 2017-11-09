@@ -8,6 +8,11 @@ function geo_locate() {
     GMaps.geolocate({
         success: function(position) {
             map.setCenter(position.coords.latitude, position.coords.longitude);
+            // get_address(position.coords.longitude, position.coords.latitude);
+            map.addMarker({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            });
         },
         error: function(error) {
             console.log('Geolocation failed: '+error.message);
@@ -51,12 +56,24 @@ function bind_address_search(){
     });
 }
 
+function setup_map() {
+    map = new GMaps({
+        el: '#godas-map',
+        lat: 5.554929,
+        lng: -0.200690,
+        zoom: 19,
+        mapType: 'hybrid'
+    });
+    styles = [{"stylers":[{"saturation":80},{"gamma":0.4}]}];
+    map.setOptions({styles: styles});
+}
+
 function get_address(lng,lat) {
     var jqxhr = $.post( "apis/core/getaddress", { longitude: lng, latitude: lat })
         .done(function(data) {
             $(".modal-body").html(address_modal(data.data));
             $.modalwindow({
-                target: '#my-modal',
+                target: '#address-modal',
                 header: 'Location Details',
                 overlay: false
             });
@@ -97,11 +114,7 @@ function address_modal(data) {
 }
 
 $(document).on('turbolinks:load', function(){
-    map = new GMaps({
-        el: '.godas-map',
-        lat: 5.554929,
-        lng: -0.200690
-    });
+    setup_map();
     display_map();
     bind_address_search();
     GMaps.on('click', map.map, function(event) {

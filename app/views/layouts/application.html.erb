@@ -5,7 +5,7 @@
     <%= csrf_meta_tags %>
     <link href="//fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <script src="//maps.google.com/maps/api/js?key=<%= ENV['GEO_API_KEY'] %>&sensor=true"></script>
+    <script src="//maps.google.com/maps/api/js?key=<%= ENV['GMAPS_API_KEY'] %>&sensor=true"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
@@ -14,8 +14,8 @@
       <div class="row auto">
         <div class="col">
           <ul>
-            <li class="brand">GODAS</li>
-            <li class="active"><%=link_to 'Map Mode', home_path %></li>
+            <li class="brand"><span class="ltr-1">G</span><span class="ltr-2">O</span><span class="ltr-3">D</span><span class="ltr-4">A</span><span class="ltr-5">S</span></li>
+            <li class="active"><%=link_to 'Map View', home_path %></li>
             <li class="search"><input type="text" class="search" placeholder="Find a location" id="address"></li>
             <li><a href="">What's GODAS</a></li>
             <li><a href="">Github</a></li>

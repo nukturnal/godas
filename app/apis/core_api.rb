@@ -28,7 +28,8 @@ class CoreAPI < Grape::API
               longitude: da.longitude.to_f.round(6),
               region: da.region,
               city: da.city,
-              district: da.district
+              district: da.district,
+              distances: da.distances
           }
       }
     else

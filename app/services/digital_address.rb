@@ -1,7 +1,7 @@
 class DigitalAddress
   RADIUS = 0.2 # lowest acceptable kilometer Geocoder Library limitation
   FEET_PER_KM = 3280.84
-  ADDRESS_BLOCK = 80 # Square Feet
+  ADDRESS_BLOCK = 60 # Square Feet
   NOT_LISTED = 'Not Listed'
   attr_accessor :geo_query, :longitude, :latitude, :locations, :formatted_address,
                 :address, :distances, :query, :district, :region, :city
@@ -16,7 +16,6 @@ class DigitalAddress
     @query = [latitude, longitude]
     @geo_query = GeoQuery.new(*@query)
     if @geo_query.valid?
-      p @geo_query.result.to_json
       @distances = []
       @locations = Location.near(@query, RADIUS, units: :km)
       return generate_address if @locations.blank?

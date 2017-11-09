@@ -13,6 +13,12 @@ body {
     font-size: 25px;
     margin-top: 6px;
     margin-right: 20px;
+
+    .ltr-1 { color: orangered; }
+    .ltr-2 { color: yellow; }
+    .ltr-3 { color: greenyellow; }
+    .ltr-4 { color: deepskyblue; }
+    .ltr-5 { color: deeppink; }
   }
   li {
     list-style: none;
@@ -21,7 +27,7 @@ body {
 
     a {
       font-weight: bold;
-      padding: 8px 15px;
+      padding: 7px 15px;
       margin: 0;
       border: none;
       border-radius: 3px !important;
@@ -40,7 +46,9 @@ body {
   li.active {
     a {
       text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.60);
-      background: #1c86f2;
+      //border: 1px solid #eee;
+      //background: #1c86f2;
+      background: rgb(53, 53, 53);
       color: #fff;
     }
 
@@ -61,7 +69,7 @@ body {
   clear: both;
 }
 
-.godas-map {
+#godas-map {
   height: 100%;
   background: #4ca0f5;
 
